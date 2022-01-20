@@ -37,11 +37,14 @@ def predict():
         for q in i :
             array2.append(q)
     
+    print(array2, "array")
 
     np.savetxt("provacsv.csv",
            array2,
            delimiter =", ",
            fmt ='% s')
+           
+    array2.clear()
     #Return a confirmation status
     return "Tutto ok"
 

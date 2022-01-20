@@ -22,6 +22,7 @@ def predict():
     #Transform data in json format
     data1 = json.dumps(data1 )
 
+
     row = json.loads(data1)["data"]
     #Extract the 50 rows
     arr = row.split("/")
@@ -35,15 +36,13 @@ def predict():
 
     for i in array1:
         for q in i :
-            array2.append(q)
+            array2.append(q)    
     
-    print(array2, "array")
-
     np.savetxt("provacsv.csv",
            array2,
            delimiter =", ",
            fmt ='% s')
-           
+
     array2.clear()
     #Return a confirmation status
     return "Tutto ok"

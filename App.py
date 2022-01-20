@@ -20,6 +20,8 @@ def predict():
     #access to data in the post request
     data1 = request.json
     #Transform data in json format
+    data1 = json.dumps(data1 )
+
     row = json.loads(data1)["data"]
     #Extract the 50 rows
     arr = row.split("/")

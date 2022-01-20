@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 import json
 import numpy as np
+import datetime
 
 
 
@@ -10,9 +11,9 @@ array1 = []
 array2 = []
 
 #Default route
-@app.route("/",methods=["GET"])
+@app.route("/timestamp",methods=["GET"])
 def func():
-    return "ciao"
+    return str(datetime.datetime.now().timestamp())
 
 #Route Predict 
 @app.route("/predict", methods=["POST"])

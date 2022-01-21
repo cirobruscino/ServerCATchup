@@ -13,7 +13,12 @@ array2 = []
 #Default route
 @app.route("/timestamp",methods=["GET"])
 def func():
-    return str(datetime.datetime.now().timestamp())
+    #take timestamp in seconds
+    ts = str(datetime.datetime.now().timestamp())
+    #take microseconds of timestamp in order to have time in format secondsFrom1970.microseconds
+    micros = str(datetime.datetime.now().microsecond)
+    return (ts, micros)
+
 
 #Route Predict 
 @app.route("/predict", methods=["POST"])

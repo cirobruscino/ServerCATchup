@@ -2,6 +2,14 @@ from flask import Flask, request, jsonify
 import json
 import numpy as np
 import datetime
+import socket
+import threading
+
+
+ 
+UDP_IP = "0.0.0.0"
+UDP_PORT = 65013
+BUFFER_SIZE = 128
 
 
 
@@ -9,6 +17,34 @@ app = Flask(__name__)
 
 array1 = []
 array2 = []
+
+def udpFunc():
+    sock = socket.socket(socket.AF_INET, # Internet
+                        socket.SOCK_DGRAM) # UDP
+    sock.bind((UDP_IP, UDP_PORT))
+    conta = 0
+    while True:
+        data = sock.recvfrom(BUFFER_SIZE)
+        if data:           
+
+            row = data[0]
+            encoding = 'utf-8'
+            stringa = str(row, encoding=encoding)
+
+            arr = stringa.split("@")
+            
+            array1.append(arr)       
+            
+            if conta == 49:
+                np.savetxt("provacsv.csv",
+                    array1,
+                    delimiter =", ",
+                    fmt ='% s')
+                conta = 0
+            conta += 1
+
+    sock.close()
+
 
 #Default route
 @app.route("/timestamp",methods=["GET"])
@@ -19,6 +55,11 @@ def func():
     micros = str(datetime.datetime.now().microsecond)
     return (ts, micros)
 
+@app.route("/streaming",methods=["GET"])
+def func2():
+    thread = threading.Thread(target=udpFunc)
+    thread.start()
+    return "Streaming partito"
 
 #Route Predict 
 @app.route("/predict", methods=["POST"])

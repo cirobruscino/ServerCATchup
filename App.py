@@ -6,11 +6,9 @@ import socket
 import threading
  
 
- 
 UDP_IP = "0.0.0.0"
 UDP_PORT = 65013
 BUFFER_SIZE = 128
-
 
 
 app = Flask(__name__)
